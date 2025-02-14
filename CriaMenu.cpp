@@ -7,6 +7,8 @@ void separacao(char separador[], char caractere);
 int opcao(const char* txt);
 
 int main(){
+system("clear");
+
     int n, w, comeco, opc1, opc2;
     char chave[3], separador[20], C;
     FILE *fp;
@@ -152,9 +154,9 @@ void Cria_Menu(char chave[2], char separador[], int n, int comeco, FILE *fp){
     // Inicio da criacao das opc. do menu
     
     if(comeco){ // Se comecar em 1, crie aqui
-        fprintf(fp, "puts(\"%c1%c- ",chave[1], chave[2]);
+        // fprintf(fp, "puts(\"%c1%c- ",chave[1], chave[2]);
         
-        for (int i=2; i<(n); i++){
+        for (int i=1; i<(n); i++){
             if (i % 2 != 0)
                 fprintf(fp, "puts(\"%c%d%c- ",chave[1], i, chave[2]);
 
@@ -171,8 +173,8 @@ void Cria_Menu(char chave[2], char separador[], int n, int comeco, FILE *fp){
     }// fim da criacao
 
     else{
-        for (int i=0; i<(n); i++){
-            if (i % 2 != 0)
+        for (int i=0; i<n-1; i++){
+            if (i % 2 == 0)
                 fprintf(fp, "puts(\"%c%d%c- ",chave[1], i, chave[2]);
 
             else{
@@ -182,9 +184,9 @@ void Cria_Menu(char chave[2], char separador[], int n, int comeco, FILE *fp){
         }
 
         if (n % 2 != 0) // se n = impar, fecha o print
-            fprintf(fp, "puts(\"%c%d%c- \\n\");", chave[1], n, chave[2]);
+            fprintf(fp, "puts(\"%c%d%c- \\n\");", chave[1], n-1, chave[2]);
         else
-            fprintf(fp, "\\t%c%d%c- \\n\");", chave[1], n, chave[2]);
+            fprintf(fp, "\\t%c%d%c- \\n\");", chave[1], n-1, chave[2]);
     }// fim dacriacao
         
     fprintf(fp, "\nscanf(\"%%c%%*c\", &opc);\n");
@@ -210,7 +212,6 @@ void Cria_Menu(char chave[2], char separador[], int n, int comeco, FILE *fp){
         }// Fim
         
         //defalt
-        fprintf(fp, "\tcase (0):\n\t\tpass = false;\n\tbreak;\n");
         fprintf(fp, "\tdefault: \n\t\tputs(\"Opcao Inexistente!\");\n");
         fprintf(fp, "}\n");
     }
@@ -218,7 +219,7 @@ void Cria_Menu(char chave[2], char separador[], int n, int comeco, FILE *fp){
 
 /* Funcao para preencher o vetor com o separador escolhido */
 void separacao(char separador[], char caractere){
-    for(int i=0; i<21; i++){
+    for(int i=0; i<22; i++){
         separador[i] = caractere;
     }
 }
