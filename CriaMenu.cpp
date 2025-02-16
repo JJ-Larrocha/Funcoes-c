@@ -65,7 +65,7 @@ int main(){
         puts("[3]- +++\t[4]- ###");
         puts("[5]- ***\t[6]- |||");
         puts("[7]- Outro caractere.");
-        scanf("%d", &opc2);
+        scanf("%d%*c", &opc2);
 
         switch(opc2){
             case (1):
@@ -93,7 +93,7 @@ int main(){
             break;
 
             case (7):
-                printf("Digite o caractere desejado: "); scanf("%c%*c", crctr);
+                printf("Digite o caractere desejado: "); scanf("%c%*c", &crctr);
                 separacao(separador[0], crctr);
             break;
 
@@ -106,7 +106,7 @@ int main(){
         puts("[3]- +++\t[4]- ###");
         puts("[5]- ***\t[6]- |||");
         puts("[7]- Outro caractere.");
-        scanf("%d", &opc2);
+        scanf("%d%*c", &opc2);
 
         switch(opc2){
             case (1):
@@ -134,7 +134,7 @@ int main(){
             break;
 
             case (7):
-                printf("Digite o caractere desejado: "); scanf("%c%*c", crctr);
+                printf("Digite o caractere desejado: "); scanf("%c%*c", &crctr);
                 separacao(separador[1], crctr);
             break;
 
@@ -285,7 +285,7 @@ void Cria_Menu(char chave[2], char separador[2][20],char C, int n, int comeco, F
 
 /* Funcao para preencher o vetor com o separador escolhido */
 void separacao(char separador[], char caractere){
-    for(int i=0; i<22; i++){
+    for(int i=0; i<19; i++){
         separador[i] = caractere;
     }
 }
