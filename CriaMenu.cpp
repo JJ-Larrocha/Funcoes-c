@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void Criar_Menu_While(char chave[2], char separador[2][20], char C, int n, FILE *fp);
-void Cria_Menu(char chave[2], char separador[2][20],char C, int n, int comeco, FILE *fp);
-void Seleciona_Separador(char separador[][20], int pos);
-void separacao(char separador[], char caractere);
+void Criar_Menu_While(char chave[2], char separador1[], char separador2[], char C, int n, FILE *fp);
+void Cria_Menu(char chave[2], char separador1[], char separador2[], char C, int n, int comeco, FILE *fp);
+void Seleciona_Separador(char *separador, int m);
+void separacao(char separador[], char caractere, int m);
 int opcao(const char* txt);
 
 int main(){
     system("clear");
 
-    int n, w, comeco, opc1;
-    char chave[2], separador[2][20], C;
+    int n, m, w, comeco, opc1;
+    char chave[2], C;
+    char *separador1, *separador2;
     FILE *fp;
     
     fp = fopen("MENU.cpp", "w");
@@ -59,27 +60,34 @@ int main(){
 
     if (opcao("Quer separador?\n[1]- Sim\t[0]- Nao\n")){    
         // Esscolha dos separadores
+        m = opcao("Qntd. de digitos no separador: ");
+        separador1 = (char*) malloc(sizeof(char) * m);
+        separador2 = (char*) malloc(sizeof(char) * m);
+
         puts("Tipo de separador inicial:");
-        Seleciona_Separador(separador, 0);
+        Seleciona_Separador(separador1, m);
         
         puts("Tipo de separador final:");
-        Seleciona_Separador(separador, 1);
+        Seleciona_Separador(separador2, m);
     }
     
     if(w)
-        Criar_Menu_While(chave, separador, C, n, fp);
+        Criar_Menu_While(chave, separador1, separador2, C, n, fp);
     else
-        Cria_Menu(chave, separador, C, n, comeco, fp);
+        Cria_Menu(chave, separador1, separador2, C, n, comeco, fp);
 
     puts("Menu criado com sucesso!");
+    
     fclose(fp);
+    free(separador1);
+    free(separador2);
 return 0;
 }
 
                                 /* FUNCOES*/
 
 /*Cria o menu com o while*/
-void Criar_Menu_While(char chave[2], char separador[2][20], char C, int n, FILE *fp){
+void Criar_Menu_While(char chave[2], char separador1[], char separador2[], char C, int n, FILE *fp){
     // Criacao do whille e passo.
     if (C == 'c')
         fprintf(fp, "bool pass = true; char opc;\n");
@@ -87,7 +95,7 @@ void Criar_Menu_While(char chave[2], char separador[2][20], char C, int n, FILE 
         fprintf(fp, "bool pass = true; int opc;\n");
 
     fprintf(fp, "while (pass == true){\n");
-    fprintf(fp, "\tputs(\"%s\\n\");\n", separador[0]);// separador inicial
+    fprintf(fp, "\tputs(\"%s\\n\");\n", separador1);// separador inicial
        
     // Inicio da criacao das opc. do menu
     for (int i=1; i<(n+1); i++){
@@ -106,7 +114,7 @@ void Criar_Menu_While(char chave[2], char separador[2][20], char C, int n, FILE 
         fprintf(fp, "\tputs(\"%c0%c- sair\");", chave[0], chave[1]);
         
     fprintf(fp, "\n\tscanf(\"%%%c%%*c\", &opc);\n", C);
-    fprintf(fp, "\tputs(\"%s\");\n\n", separador[1]);// separador final
+    fprintf(fp, "\tputs(\"%s\");\n\n", separador2);// separador final
 
    
     fprintf(fp, "\tswitch(opc){\n");// switch
@@ -131,13 +139,13 @@ void Criar_Menu_While(char chave[2], char separador[2][20], char C, int n, FILE 
 }
 
 /*Cria o menu sem o while*/
-void Cria_Menu(char chave[2], char separador[2][20],char C, int n, int comeco, FILE *fp){
+void Cria_Menu(char chave[2], char separador1[], char separador2[], char C, int n, int comeco, FILE *fp){
     if (C == 'c')
         fprintf(fp, "char opc;\n\n");
     else
         fprintf(fp, "int opc;\n\n");
 
-    fprintf(fp, "puts(\"%s\");\n", separador[0]);// separador inicial
+    fprintf(fp, "puts(\"%s\");\n", separador1);// separador inicial
 
     // Inicio da criacao das opc. do menu
     
@@ -176,7 +184,7 @@ void Cria_Menu(char chave[2], char separador[2][20],char C, int n, int comeco, F
     }// fim dacriacao
         
     fprintf(fp, "\nscanf(\"%%%c%%*c\", &opc);\n", C);
-    fprintf(fp, "puts(\"%s\\n\");\n\n", separador[1]);// separador final
+    fprintf(fp, "puts(\"%s\\n\");\n\n", separador2);// separador final
 
     fprintf(fp, "switch(opc){\n"); //Switch
 
@@ -209,7 +217,7 @@ void Cria_Menu(char chave[2], char separador[2][20],char C, int n, int comeco, F
     }
 }
 
-void Seleciona_Separador(char separador[][20], int pos){
+void Seleciona_Separador(char *separador, int m){
     char crctr;
     int opc;
         
@@ -222,32 +230,32 @@ void Seleciona_Separador(char separador[][20], int pos){
 
     switch(opc){
         case (1):
-            separacao(separador[pos], '=');
+            separacao(separador, '=', m);
         break;
 
         case (2):
-            separacao(separador[pos], '-');
+            separacao(separador, '-', m);
         break;
 
         case (3):
-            separacao(separador[pos], '+');
+            separacao(separador, '+', m);
         break;
 
         case (4):
-            separacao(separador[pos], '#');
+            separacao(separador, '#', m);
         break;
 
         case (5):
-            separacao(separador[pos], '*');
+            separacao(separador, '*', m);
         break;
         
         case (6):
-            separacao(separador[pos], '|');
+            separacao(separador, '|', m);
         break;
 
         case (7):
             printf("Digite o caractere desejado: "); scanf("%c%*c", &crctr);
-            separacao(separador[pos], crctr);
+            separacao(separador, crctr, m);
         break;
 
         default:
@@ -256,8 +264,8 @@ void Seleciona_Separador(char separador[][20], int pos){
 }
 
 /* Funcao para preencher o vetor com o separador escolhido */
-void separacao(char separador[], char caractere){
-    for(int i=0; i<19; i++){
+void separacao(char separador[], char caractere, int m){
+    for(int i=0; i<m; i++){
         separador[i] = caractere;
     }
 }
