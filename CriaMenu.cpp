@@ -3,13 +3,14 @@
 
 void Criar_Menu_While(char chave[2], char separador[2][20], char C, int n, FILE *fp);
 void Cria_Menu(char chave[2], char separador[2][20],char C, int n, int comeco, FILE *fp);
+void Seleciona_Separador(char separador[][20], int pos);
 void separacao(char separador[], char caractere);
 int opcao(const char* txt);
 
 int main(){
     system("clear");
 
-    int n, w, comeco, opc1, opc2;
+    int n, w, comeco, opc1;
     char chave[2], separador[2][20], C;
     FILE *fp;
     
@@ -57,90 +58,12 @@ int main(){
     }
 
     if (opcao("Quer separador?\n[1]- Sim\t[0]- Nao\n")){    
-        char crctr;
-
-        // tipo de separador
+        // Esscolha dos separadores
         puts("Tipo de separador inicial:");
-        puts("[1]- ===\t[2]- ---");
-        puts("[3]- +++\t[4]- ###");
-        puts("[5]- ***\t[6]- |||");
-        puts("[7]- Outro caractere.");
-        scanf("%d%*c", &opc2);
-
-        switch(opc2){
-            case (1):
-                separacao(separador[0], '=');
-            break;
-
-            case (2):
-                separacao(separador[0], '-');
-            break;
-
-            case (3):
-                separacao(separador[0], '+');
-            break;
-
-            case (4):
-                separacao(separador[0], '#');
-            break;
-
-            case (5):
-                separacao(separador[0], '*');
-            break;
+        Seleciona_Separador(separador, 0);
         
-            case (6):
-                separacao(separador[0], '|');
-            break;
-
-            case (7):
-                printf("Digite o caractere desejado: "); scanf("%c%*c", &crctr);
-                separacao(separador[0], crctr);
-            break;
-
-            default:
-                break;
-        }
-
         puts("Tipo de separador final:");
-        puts("[1]- ===\t[2]- ---");
-        puts("[3]- +++\t[4]- ###");
-        puts("[5]- ***\t[6]- |||");
-        puts("[7]- Outro caractere.");
-        scanf("%d%*c", &opc2);
-
-        switch(opc2){
-            case (1):
-                separacao(separador[1], '=');
-            break;
-
-            case (2):
-                separacao(separador[1], '-');
-            break;
-
-            case (3):
-                separacao(separador[1], '+');
-            break;
-
-            case (4):
-                separacao(separador[1], '#');
-            break;
-
-            case (5):
-                separacao(separador[1], '*');
-            break;
-        
-            case (6):
-                separacao(separador[1], '|');
-            break;
-
-            case (7):
-                printf("Digite o caractere desejado: "); scanf("%c%*c", &crctr);
-                separacao(separador[1], crctr);
-            break;
-
-            default:
-                break;
-        }
+        Seleciona_Separador(separador, 1);
     }
     
     if(w)
@@ -153,7 +76,9 @@ int main(){
 return 0;
 }
 
-// criacao do menu
+                                /* FUNCOES*/
+
+/*Cria o menu com o while*/
 void Criar_Menu_While(char chave[2], char separador[2][20], char C, int n, FILE *fp){
     // Criacao do whille e passo.
     if (C == 'c')
@@ -205,6 +130,7 @@ void Criar_Menu_While(char chave[2], char separador[2][20], char C, int n, FILE 
     fprintf(fp, "}");
 }
 
+/*Cria o menu sem o while*/
 void Cria_Menu(char chave[2], char separador[2][20],char C, int n, int comeco, FILE *fp){
     if (C == 'c')
         fprintf(fp, "char opc;\n\n");
@@ -280,6 +206,52 @@ void Cria_Menu(char chave[2], char separador[2][20],char C, int n, int comeco, F
         //defalt
         fprintf(fp, "\tdefault: \n\t\tputs(\"Opcao Inexistente!\");\n");
         fprintf(fp, "}\n");
+    }
+}
+
+void Seleciona_Separador(char separador[][20], int pos){
+    char crctr;
+    int opc;
+        
+    // tipo de separador
+    puts("[1]- ===\t[2]- ---");
+    puts("[3]- +++\t[4]- ###");
+    puts("[5]- ***\t[6]- |||");
+    puts("[7]- Outro caractere.");
+    scanf("%d%*c", &opc);
+
+    switch(opc){
+        case (1):
+            separacao(separador[pos], '=');
+        break;
+
+        case (2):
+            separacao(separador[pos], '-');
+        break;
+
+        case (3):
+            separacao(separador[pos], '+');
+        break;
+
+        case (4):
+            separacao(separador[pos], '#');
+        break;
+
+        case (5):
+            separacao(separador[pos], '*');
+        break;
+        
+        case (6):
+            separacao(separador[pos], '|');
+        break;
+
+        case (7):
+            printf("Digite o caractere desejado: "); scanf("%c%*c", &crctr);
+            separacao(separador[pos], crctr);
+        break;
+
+        default:
+            break;
     }
 }
 
