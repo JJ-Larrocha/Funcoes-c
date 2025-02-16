@@ -10,7 +10,7 @@ int opcao(const char* txt);
 int main(){
     system("clear");
 
-    int n, m, w, comeco, opc1;
+    int n, m, w, comeco, opc, layout, lateral, ordem;
     char chave[2], C;
     char *separador1, *separador2;
     FILE *fp;
@@ -35,9 +35,9 @@ int main(){
     puts("Tipo de selecionador:");
 	puts("(1)- ( )\t[2]- [ ]");
 	puts("{3}- { }\t|4|- | |");
-	scanf("%d", &opc1);
+	scanf("%d", &opc);
     
-    switch(opc1){
+    switch(opc){
         case (1):
             chave[0]='('; chave[1]=')';
         break;
@@ -64,13 +64,53 @@ int main(){
         separador1 = (char*) malloc(sizeof(char) * m);
         separador2 = (char*) malloc(sizeof(char) * m);
 
-        puts("Tipo de separador inicial:");
+        puts("\nTipo de separador inicial:");
         Seleciona_Separador(separador1, m);
         
-        puts("Tipo de separador final:");
+        puts("\nTipo de separador final:");
         Seleciona_Separador(separador2, m);
     }
-    
+
+    puts("\nSelecione o layout do Menu:");
+    puts("[1]- Padrao. Ex:\n\t[a]-\t[b]-\n\t[c]-\t[d]-");
+    puts("\n[2]- Apenas uma coluna. Ex:\n\t[a]-\n\t[b]\n\t[c]-\n\t[d]-");
+    puts("\n[3]- Mais de duas opcoes na lateral. Ex:\n\t[a]-\t[b]-\t[c]-\n\t[d]-\t[e]-\t[f]-");
+    scanf("%d%*c", &layout);
+
+    switch(layout){
+        case (1):
+        break;
+
+        case (2):
+        break;
+
+        case (3):
+        {
+            lateral = opcao("\nQntd. de elementos na lateral: ");
+            
+            puts("\nOrdem dos elementos:");
+            puts("[1]- Da esqueda pra direita. Ex:\n\t[a]-\t[b]-\t[c]-\n\t[d]-\t[e]-\t[f]-");
+            puts("[2]- De cima pra Baixo. Ex:\n\t[a]-\t[c]-\t[e]-\n\t[b]-\t[d]-\t[f]-");
+            scanf("%d%*c", &ordem);
+
+            switch(ordem){
+                case (1):
+                break;
+
+                case (2):
+                break;
+
+                default: 
+                    puts("Opcao Inexistente!");
+            }
+            break;
+        }
+
+        default: 
+            puts("Opcao Inexistente!");
+    break;
+    }
+
     if(w)
         Criar_Menu_While(chave, separador1, separador2, C, n, fp);
     else
