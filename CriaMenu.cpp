@@ -429,7 +429,3 @@ int opcao(const char* txt){
     scanf("%d", &a);
     return a;
 }
-
-// void Cria_Menu_Coluna(){
-
-// }
