@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// void Criar_Menu_While(char chave[2], char separador1[], char separador2[], char C, int n, FILE *fp);
+                                    /* ESCOPOS */
+
 void Cria_Menu_Padrao(char chave[2], char separador1[], char separador2[], char C, int n, int comeco, int w, FILE *fp);
 void Cria_Menu_Coluna(char chave[2], char separador1[], char separador2[], char C, int n, int comeco, int w, FILE *fp);
+void Cria_Menu_3(char chave[2], char separador1[], char separador2[], char C, int n, int comeco, int w, FILE *fp);
 void Seleciona_Separador(char *separador, int m);
 void separacao(char separador[], char caractere, int m);
 int opcao(const char* txt);
+
+                                    /* MAIN */
 
 int main(){
     system("clear");
@@ -123,7 +127,7 @@ int main(){
 return 0;
 }
 
-                                /* FUNCOES*/
+                                    /* FUNCOES*/
 
 /*Cria o menu no formato  padrao, com e/ou sem while*/
 void Cria_Menu_Padrao(char chave[2], char separador1[], char separador2[], char C, int n, int comeco, int w, FILE *fp){
@@ -307,6 +311,139 @@ void Cria_Menu_Coluna(char chave[2], char separador1[], char separador2[], char 
             fprintf(fp, "puts(\"%c%d%c- \");\n",chave[0], i, chave[1]);
 
 
+    }// fim dacriacao
+        
+    /* Leitura da opcao e Separador final */
+    if(w){
+        fprintf(fp, "\n\tscanf(\"%%%c%%*c\", &opc);\n", C);
+        fprintf(fp, "\tputs(\"%s\\n\");\n\n", separador2);// separador final
+        fprintf(fp, "\tswitch(opc){\n");
+    }
+    else{
+        fprintf(fp, "\nscanf(\"%%%c%%*c\", &opc);\n", C);
+        fprintf(fp, "puts(\"%s\\n\");\n\n", separador2);// separador final
+        fprintf(fp, "switch(opc){\n");
+    }
+
+    /* Switch */
+
+    if (comeco){ //Se comecar em 1:
+        if(w){
+            // Criacao das opcoes do switch com while
+            for (int i=1; i<(n+1); i++){
+                if (C == 'c')
+                    fprintf(fp, "\t\tcase ('%d'):\n\t\tbreak;\n\n", i);
+                else
+                    fprintf(fp, "\t\tcase (%d):\n\t\tbreak;\n\n", i);
+            }// Fim
+
+            fprintf(fp, "\t\tcase(0):\n\t\t\tpass = false;\n\t\tbreak;");
+            //defalt
+            fprintf(fp, "\t\tdefault: \n\t\t\tputs(\"Opcao Inexistente!\");\n");
+            fprintf(fp, "\t}\n}");
+        }
+
+        else{
+            // Criacao das opcoes do switch com while
+            for (int i=1; i<(n+1); i++){
+                if (C == 'c')
+                    fprintf(fp, "\tcase ('%d'):\n\tbreak;\n\n", i);
+                else
+                    fprintf(fp, "\tcase (%d):\n\tbreak;\n\n", i);
+            }// Fim
+
+            //defalt
+            fprintf(fp, "\tdefault: \n\t\tputs(\"Opcao Inexistente!\");\n");
+            fprintf(fp, "}\n");
+        }
+    }
+    
+    else { //Se comecar em 0
+        // Criacao das opcoes do switch
+        for (int i=0; i<n; i++){
+            if (C == 'c')
+                fprintf(fp, "\tcase ('%d'):\n\tbreak;\n\n", i);
+            else
+                fprintf(fp, "\tcase (%d):\n\tbreak;\n\n", i);
+        }// Fim
+        
+        //defalt
+        fprintf(fp, "\tdefault: \n\t\tputs(\"Opcao Inexistente!\");\n");
+        fprintf(fp, "}\n");
+    }
+}
+
+void Cria_Menu_3(char chave[2], char separador1[], char separador2[], char C, int n, int comeco, int w, FILE *fp){
+    /* Criacao das variaveis de leitura e while */
+    
+    if (C == 'c'){// Se for leituura de um caractere
+        if(w){// Se tiver while
+            fprintf(fp, "bool pass = true; char opc;\n\n");
+            fprintf(fp, "while (pass == true){\n");
+        }
+        else // Se nao tiver
+            fprintf(fp, "char opc;\n\n");
+    }
+    else{ // Se for leitura de um inteiro
+        if(w){// Se tiver while
+            fprintf(fp, "bool pass = true; int opc;\n\n");
+            fprintf(fp, "while (pass){\n");
+        }
+        else // Se nao tiver
+            fprintf(fp, "int opc;\n\n");
+    }
+    /* Separador inicial */
+    if (w)
+        fprintf(fp, "\tputs(\"%s\");\n", separador1);
+    else
+        fprintf(fp, "puts(\"%s\");\n", separador1);
+    
+
+    /* Inicio da criacao das opc. do menu */
+    
+    if(comeco){ // Se comecar em 1, crie aqui        
+        for (int i=1; i<(n); i++){
+            if (i % 2 != 0 && w)
+                fprintf(fp, "\tputs(\"%c%d%c- ",chave[0], i, chave[1]);
+            else if (i % 2 != 0 || !w)
+                fprintf(fp, "puts(\"%c%d%c- ",chave[0], i, chave[1]);
+            
+            else{
+                fprintf(fp, "\\t%c%d%c- \\n\");", chave[0], i, chave[1]);
+                fprintf(fp, "\n");
+            }
+        }
+
+        if (!w){
+            if (n % 2 != 0) // se n = impar, fecha o print
+                fprintf(fp, "puts(\"%c%d%c- \\n\");", chave[0], n, chave[1]);
+            else
+                fprintf(fp, "\\t%c%d%c- \\n\");", chave[0], n, chave[1]);
+        }
+
+        else {
+            if (n % 2 == 0) // se n = par, fecha o print
+                fprintf(fp, "\\t%c0%c- sair\");", chave[0], chave[1]);
+            else
+                fprintf(fp, "\tputs(\"%c0%c- sair\");", chave[0], chave[1]);
+        }
+    }// fim da criacao
+
+    else{ //Se comecar em 0, crie aqui
+        for (int i=0; i<n-1; i++){
+            if (i % 2 == 0)
+                fprintf(fp, "puts(\"%c%d%c- ",chave[0], i, chave[1]);
+
+            else{
+                fprintf(fp, "\\t%c%d%c- \\n\");", chave[0], i, chave[1]);
+                fprintf(fp, "\n");
+            }
+        }
+
+        if (n % 2 != 0) // se n = impar, fecha o print
+            fprintf(fp, "puts(\"%c%d%c- \\n\");", chave[0], n-1, chave[1]);
+        else
+            fprintf(fp, "\\t%c%d%c- \\n\");", chave[0], n-1, chave[1]);
     }// fim dacriacao
         
     /* Leitura da opcao e Separador final */
