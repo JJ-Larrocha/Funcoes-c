@@ -343,12 +343,12 @@ void Cria_Switch(char C, int n, int comeco, int w, FILE *fp){
 
             fprintf(fp, "\t\tcase(0):\n\t\t\tpass = false;\n\t\tbreak;");
             //defalt
-            fprintf(fp, "\t\tdefault: \n\t\t\tputs(\"Opcao Inexistente!\");\n");
+            fprintf(fp, "\n\n\t\tdefault: \n\t\t\tputs(\"Opcao Inexistente!\");\n");
             fprintf(fp, "\t}\n}");
         }
 
         else{
-            // Criacao das opcoes do switch com while
+            // Criacao das opcoes do switch sem while
             for (int i=1; i<(n+1); i++){
                 if (C == 'c')
                     fprintf(fp, "\tcase ('%d'):\n\tbreak;\n\n", i);
@@ -372,7 +372,7 @@ void Cria_Switch(char C, int n, int comeco, int w, FILE *fp){
         }// Fim
         
         //defalt
-        fprintf(fp, "\tdefault: \n\t\tputs(\"Opcao Inexistente!\");\n");
+        fprintf(fp, "\n\tdefault: \n\t\tputs(\"Opcao Inexistente!\");\n");
         fprintf(fp, "}\n");
     }
 }
