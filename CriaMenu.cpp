@@ -306,54 +306,7 @@ void Cria_Menu_Horizontal_2(char chave[2], char separador1[], char separador2[],
     Preambulo(separador1, C, w, fp);
 
     /* Inicio da criacao das opc. do menu */
-    
-    if(comeco){ // Se comecar em 1, crie aqui        
-        for (int i=1; i<=n; i++){
-            if ((i-1) % l == 0 && w)
-                fprintf(fp, "\tputs(\"%c%d%c- ",chave[0], i, chave[1]);
-            else if ((i-1) % l == 0)
-                fprintf(fp, "puts(\"%c%d%c- ",chave[0], i, chave[1]);
 
-            else if ((i-1) % l != 0 && (i-1) % l != (l-1)) // Se nao for o ultimo elemento da linha
-                fprintf(fp, "\\t%c%d%c- ",chave[0], i, chave[1]);
-            
-            else{
-                fprintf(fp, "\\t%c%d%c- \\n\");", chave[0], i, chave[1]);
-                fprintf(fp, "\n");
-            }
-        }
-
-        if (!w){ // Se nao tem while
-            if (n % l != 0) // se n divisivel por l, fecha o print
-                fprintf(fp, "\\n\");", chave[0], n, chave[1]);
-        }
-
-        else {
-            if (n % l == !0) // se n divisivel por l, fecha o print
-                fprintf(fp, "\\t%c0%c- sair\");", chave[0], chave[1]);
-            else
-                fprintf(fp, "\tputs(\"%c0%c- sair\");", chave[0], chave[1]);
-        }
-    }// fim da criacao
-
-    else{ //Se comecar em 0, crie aqui
-        for (int i=0; i<n; i++){
-            if (i % l == 0 )
-                fprintf(fp, "puts(\"%c%d%c- ",chave[0], i, chave[1]);
-
-            else if (i % l != 0 && i % l != (l-1)) // Se nao for o ultimo elemento da linha
-                fprintf(fp, "\\t%c%d%c- ",chave[0], i, chave[1]);
-            
-            else{
-                fprintf(fp, "\\t%c%d%c- \\n\");", chave[0], i, chave[1]);
-                fprintf(fp, "\n");
-            }
-        }
-
-        if (n % l != 0) // se n divisivel por l, fecha o print
-            fprintf(fp, "\\n\");", chave[0], n, chave[1]);
-
-    }// fim da criacao
         
     /* Leitura da opcao e Separador final */
     if(w){
