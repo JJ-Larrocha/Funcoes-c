@@ -108,7 +108,7 @@ int main(){
                 break;
 
                 case (2):
-                    Cria_Menu_Horizontal_1(chave, separador1, separador2, C, n, comeco, w, lateral, fp);
+                    Cria_Menu_Horizontal_2(chave, separador1, separador2, C, n, comeco, w, lateral, fp);
                 break;
 
                 default: 
