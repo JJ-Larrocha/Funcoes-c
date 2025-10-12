@@ -13,7 +13,7 @@ int main(){
     n = opcao("Qnt elnt:");
     nl = opcao("ltrl:");
 
-    
+     
 
 
 fclose(fp);
