@@ -4,19 +4,20 @@
 int opcao(const char* txt);
 
 int main(){
-    int n, nl, i=0;
-    FILE *fp = fopen("horizontal.txt", "w");
+    int n, nl, x;
     
-    if(fp == NULL)
-        return 0;
+    n = opcao("Qnt elnt:");// qntd. de numeros
+    nl = opcao(" ltrl:"); // n. lateral
+    x =  n/nl;
 
-    n = opcao("Qnt elnt:");
-    nl = opcao("ltrl:");
+    for(int i=0; i<=n; i++){
+        if(i%nl== 0)
+            puts("\n");
+        else
+            printf("|%d\n", (i*x)+1); 
+    }
 
-     
 
-
-fclose(fp);
 return 0;
 }
 
